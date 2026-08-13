@@ -2,7 +2,7 @@
 
 // ===== MODEL DATA =====
 const MODELS = [
-  { id: "claude-fable-5", slug: "claude-fable-5", name: "Claude Fable 5", developer: "Anthropic", params: "2T", contextWindow: "1M", releaseYear: 2026, globalScore: 95, mmlu: 93, gpqa: 91, humaneval: 92, lmsysElo: 1506, description: "Le modèle le plus performant du classement LMSYS Arena (1506 Elo). Version sécurisée de Mythos 5.", capabilities: ["Coding autonome", "Agents multi-étapes", "Vision", "Mémoire longue"], strengths: ["N°1 LMSYS Arena", "Sessions autonomes 24h+", "Qualité code production"], bestFor: ["Projets coding complexes", "Migrations autonomes", "Recherche agentique"], price: "Inclus Pro/Max", apiAvailable: true, openSource: false, category: "Frontier" },
+  { id: "claude-fable-5", slug: "claude-fable-5", name: "Claude Fable 5", developer: "Anthropic", params: "2T", contextWindow: "1M", releaseYear: 2026, globalScore: 95, mmlu: 93, gpqa: 91, humaneval: 92, lmsysElo: 1506, description: "Le modèle le plus performant du classement LMSYS Arena (1506 Elo). Version sécurisée de Mythos 5, conçue pour le coding autonome longue durée et les tâches agents complexes.", capabilities: ["Coding autonome", "Agents multi-étapes", "Vision", "Mémoire longue"], strengths: ["N°1 LMSYS Arena", "Sessions autonomes 24h+", "Qualité code production"], bestFor: ["Projets coding complexes", "Migrations autonomes", "Recherche agentique"], price: "Inclus Pro/Max", apiAvailable: true, openSource: false, category: "Frontier" },
   { id: "claude-opus-5-high", slug: "claude-opus-5-high", name: "Claude Opus 5 (High)", developer: "Anthropic", params: "2T", contextWindow: "1M", releaseYear: 2026, globalScore: 94, mmlu: 92, gpqa: 90, humaneval: 93, lmsysElo: 1493, description: "Modèle de référence Anthropic pour le raisonnement complexe et le coding agentic.", capabilities: ["Raisonnement avancé", "Coding expert", "Agents", "Analyse documentaire"], strengths: ["Performances frontier", "Rapport qualité/prix", "Fiabilité élevée"], bestFor: ["Coding complexe", "Recherche", "Analyse technique"], price: "$5/$25 per 1M", apiAvailable: true, openSource: false, category: "Frontier" },
   { id: "claude-opus-5-max", slug: "claude-opus-5-max", name: "Claude Opus 5 (Max)", developer: "Anthropic", params: "2T", contextWindow: "1M", releaseYear: 2026, globalScore: 93, mmlu: 91, gpqa: 89, humaneval: 91, lmsysElo: 1489, description: "Version max de Opus 5, optimisée pour les tâches les plus exigeantes.", capabilities: ["Raisonnement extrême", "Coding deep", "Security research"], strengths: ["Top performance", "Code quality", "Raisonnement scientifique"], bestFor: ["Recherche sécurité", "Problèmes mathématiques"], price: "$12.50/$62.50 per 1M", apiAvailable: true, openSource: false, category: "Frontier" },
   { id: "kimi-k3", slug: "kimi-k3", name: "Kimi K3", developer: "Moonshot AI", params: "2.8T", contextWindow: "1M", releaseYear: 2026, globalScore: 92, mmlu: 90, gpqa: 93.5, humaneval: 89, lmsysElo: 1475, description: "Le plus grand modèle open-weights jamais publié (2.8T). Record GPQA Diamond 93.5%.", capabilities: ["Science", "Raisonnement long", "Coding", "Open weights"], strengths: ["Record GPQA", "Open weights 2.8T", "1M tokens"], bestFor: ["Recherche scientifique", "Auto-hébergement"], price: "$2.90/$14 per 1M", apiAvailable: true, openSource: true, category: "Frontier" },
@@ -109,7 +109,7 @@ function renderTopModels(containerId, count = 6) {
       </div>
       <p class="model-card-desc">${model.description.substring(0, 80)}...</p>
       <div class="model-card-tags">
-        ${model.openSource ? '<span class="tag">Open</span>' : ''}
+        ${model.openSource ? '<span class="tag tag-open">Open</span>' : ''}
         <span class="tag">${model.category}</span>
       </div>
     </a>
@@ -129,7 +129,7 @@ function renderArticles(containerId, count = 3) {
           <span class="article-date">${formatDate(article.date)}</span>
           <span class="article-read-time">${article.readTime}</span>
         </div>
-        <h3><a href="article.html?slug=${article.slug}">${article.title}</a></h3>
+        <h3><a href="article.html?slug=${article.slug}" style="color:inherit;text-decoration:none;">${article.title}</a></h3>
         <p>${article.excerpt}</p>
         <a href="article.html?slug=${article.slug}" class="btn btn-text">Lire l'article →</a>
       </div>

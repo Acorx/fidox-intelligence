@@ -4,184 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="article-title">Article - Fidox Intelligence</title>
+    <meta name="description" id="meta-description" content="Article sur les benchmarks IA.">
+    <meta name="keywords" content="IA, benchmarks, modèles">
+    <link rel="canonical" id="canonical" href="https://fidox-intelligence.pages.dev/article.html">
+    <meta property="og:title" id="og-title" content="Article - Fidox Intelligence">
+    <meta property="og:description" id="og-description" content="Article sur l'intelligence artificielle.">
+    <meta property="og:url" content="https://fidox-intelligence.pages.dev/article.html">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-08-10T00:00:00+00:00">
+    <meta property="article:author" content="Fidox Team">
     <link rel="icon" type="image/png" href="logo-fidox.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Article",
+        "author": {"@type": "Organization", "name": "Fidox Team"},
+        "datePublished": "2026-08-10",
+        "publisher": {"@type": "Organization", "name": "Fidox Intelligence"}
+    }
+    </script>
 </head>
 <body>
-    <header class="header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo">
-                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
-                Fidox Intelligence
-            </a>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">Accueil</a>
-                <a href="models.html" class="nav-link">Modèles</a>
-                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-                <a href="articles.html" class="nav-link active">Articles</a>
-            </nav>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                </svg>
-                <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <main>
-        <article class="article-page">
-            <div class="container">
-                <div class="breadcrumb">
-                    <a href="index.html">Accueil</a>
-                    <span>/</span>
-                    <a href="articles.html">Articles</a>
-                    <span>/</span>
-                    <span id="article-breadcrumb">-</span>
-                </div>
-
-                <header class="article-header">
-                    <div class="article-meta">
-                        <span class="article-category" id="article-category">Benchmark</span>
-                        <span class="article-date" id="article-date">10 août 2026</span>
-                        <span class="article-read-time" id="article-read-time">12 min</span>
-                    </div>
-                    <h1 id="article-title-main">Chargement...</h1>
-                    <div class="article-author">
-                        <span id="article-author">Fidox Team</span>
-                    </div>
-                </header>
-
-                <div class="article-content" id="article-content">
-                    <p>Chargement de l'article...</p>
-                </div>
-
-                <div class="article-tags" id="article-tags">
-                    <span class="tag">Claude Fable 5</span>
-                    <span class="tag">Anthropic</span>
-                    <span class="tag">Benchmarks</span>
-                </div>
-
-                <div class="article-navigation">
-                    <a href="models.html" class="btn btn-outline">← Tous les modèles</a>
-                    <a href="leaderboard.html" class="btn btn-primary">Voir le leaderboard →</a>
-                </div>
-            </div>
-        </article>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
-                        Fidox Intelligence
-                    </div>
-                    <p>Votre source d'information sur les benchmarks IA.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Navigation</h4>
-                    <a href="index.html">Accueil</a>
-                    <a href="models.html">Modèles</a>
-                    <a href="leaderboard.html">Leaderboard</a>
-                    <a href="articles.html">Articles</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Ressources</h4>
-                    <a href="#">API</a>
-                    <a href="#">Documentation</a>
-                    <a href="#">GitHub</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Légal</h4>
-                    <a href="#">Mentions légales</a>
-                    <a href="#">Confidentialité</a>
-                    <a href="#">Cookies</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Fidox Intelligence. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="data.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const slug = params.get('slug');
-            
-            const article = ARTICLES.find(a => a.slug === slug);
-            
-            if (!article) {
-                window.location.href = 'articles.html';
-                return;
-            }
-
-            // Update title
-            document.getElementById('article-title').textContent = `${article.title} - Fidox Intelligence`;
-            document.getElementById('article-title-main').textContent = article.title;
-            document.getElementById('article-breadcrumb').textContent = article.title;
-            
-            // Update meta
-            document.getElementById('article-category').textContent = article.category;
-            document.getElementById('article-date').textContent = formatDate(article.date);
-            document.getElementById('article-read-time').textContent = article.readTime;
-            document.getElementById('article-author').textContent = article.author;
-            
-            // Generate content
-            const model = MODELS.find(m => m.slug === slug.replace('-review', '').replace('-analysis', ''));
-            
-            let content = `
-                <img src="${article.image}" alt="${article.title}" class="article-image">
-                <p class="lead">${article.excerpt}</p>
-            `;
-            
-            if (model) {
-                content += `
-                    <h2>À propos de ${model.name}</h2>
-                    <p>${model.description}</p>
-                    
-                    <h3>Performances clés</h3>
-                    <table class="article-table">
-                        <thead>
-                            <tr><th>Benchmark</th><th>Score</th><th>Classement</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>LMSYS Arena Elo</td><td><strong>${model.lmsysElo}</strong></td><td>${['#1','#2','#3'][MODELS.indexOf(model)] || '#' + (MODELS.indexOf(model) + 1)}</td></tr>
-                            <tr><td>MMLU</td><td>${model.mmlu}/100</td><td>${model.mmlu >= 90 ? 'Excellent' : model.mmlu >= 80 ? 'Très bien' : 'Bon'}</td></tr>
-                            <tr><td>GPQA</td><td>${model.gpqa}/100</td><td>${model.gpqa >= 85 ? 'Expert' : model.gpqa >= 75 ? 'Avancé' : 'Intermédiaire'}</td></tr>
-                            <tr><td>HumanEval</td><td>${model.humaneval}/100</td><td>${model.humaneval >= 85 ? 'Production' : model.humaneval >= 75 ? 'Développement' : 'Apprentissage'}</td></tr>
-                        </tbody>
-                    </table>
-                    
-                    <h3>Points forts</h3>
-                    <ul class="article-list">
-                        ${model.strengths.map(s => `<li>${s}</li>`).join('')}
-                    </ul>
-                    
-                    <h3>Meilleur pour</h3>
-                    <ul class="article-list">
-                        ${model.bestFor.map(b => `<li>${b}</li>`).join('')}
-                    </ul>
-                `;
-            }
-            
-            content += `
-                <div class="article-cta">
-                    <h3>En savoir plus ?</h3>
-                    <p>Découvrez toutes les informations sur ${model ? model.name : 'ce modèle'}.</p>
-                    <a href="model.html?slug=${slug.replace('-review', '').replace('-analysis', '')}" class="btn btn-primary">Voir la fiche modèle</a>
-                </div>
-            `;
-            
-            document.getElementById('article-content').innerHTML = content;
-        });
-    </script>
-</body>
-</html>

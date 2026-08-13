@@ -3,246 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fidox Intelligence - Benchmarks IA & Comparaisons</title>
+    <title>Fidox Intelligence - Benchmarks IA & Comparaisons de Modèles LLM 2026</title>
+    <meta name="description" content="Comparatifs rigoureux des meilleurs modèles IA : Claude Fable 5, GPT-5.6, Kimi K3, Grok 4.6. Classement LMSYS Arena, benchmarks MMLU, GPQA, HumanEval.">
+    <meta name="keywords" content="benchmarks IA, modèle langage, Claude, GPT, Kimi, Grok, LMSYS Arena, MMLU, GPQA, HumanEval, intelligence artificielle 2026">
+    <meta name="author" content="Fidox Intelligence">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://fidox-intelligence.pages.dev/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fidox-intelligence.pages.dev/">
+    <meta property="og:title" content="Fidox Intelligence - Benchmarks IA & Comparaisons">
+    <meta property="og:description" content="Classements rigoureux des meilleurs modèles IA avec benchmarks LMSYS Arena, MMLU, GPQA, HumanEval.">
+    <meta property="og:image" content="https://fidox-intelligence.pages.dev/logo-fidox.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:site_name" content="Fidox Intelligence">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fidox Intelligence - Benchmarks IA">
+    <meta name="twitter:description" content="Comparatifs des meilleurs modèles IA 2026.">
+    <meta name="twitter:image" content="https://fidox-intelligence.pages.dev/logo-fidox.png">
+    
     <link rel="icon" type="image/png" href="logo-fidox.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Fidox Intelligence",
+        "url": "https://fidox-intelligence.pages.dev/",
+        "description": "Benchmarks rigoureux et comparatifs des modèles d'intelligence artificielle",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://fidox-intelligence.pages.dev/models.html?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>
 <body>
-    <header class="header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo">
-                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
-                Fidox Intelligence
-            </a>
-            <nav class="nav">
-                <a href="index.html" class="nav-link active">Accueil</a>
-                <a href="models.html" class="nav-link">Modèles</a>
-                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-                <a href="articles.html" class="nav-link">Articles</a>
-            </nav>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/>
-                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                </svg>
-                <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <main>
-        <!-- HERO SECTION -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="badge">
-                        <span class="badge-dot"></span>
-                        Mise à jour quotidienne
-                    </div>
-                    <h1>L'IA au<br><span>palmarès de la main</span></h1>
-                    <p class="hero-subtitle">Benchmarks rigoureux, analyses approfondies et comparatifs honnêtes des derniers modèles d'intelligence artificielle.</p>
-                    <div class="hero-actions">
-                        <a href="leaderboard.html" class="btn btn-primary btn-lg">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z"/>
-                            </svg>
-                            Voir le classement
-                        </a>
-                        <a href="models.html" class="btn btn-secondary btn-lg">Explorer les modèles</a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat-value">27</span>
-                            <span class="stat-label">Modèles</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat">
-                            <span class="stat-value">1M+</span>
-                            <span class="stat-label">Tokens contexte</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat">
-                            <span class="stat-value">4</span>
-                            <span class="stat-label">Catégories</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="hero-chart-card">
-                        <div class="chart-card-header">
-                            <div>
-                                <span class="chart-card-title">Classement LMSYS Arena</span>
-                                <span class="chart-card-subtitle">Elo - Août 2026</span>
-                            </div>
-                            <div class="chart-card-badge">LIVE</div>
-                        </div>
-                        <canvas id="heroChart"></canvas>
-                        <div class="chart-card-footer">
-                            <div class="chart-stat">
-                                <div class="chart-stat-value">1506</div>
-                                <div class="chart-stat-label">Meilleur Elo</div>
-                            </div>
-                            <div class="chart-stat">
-                                <div class="chart-stat-value">+12</div>
-                                <div class="chart-stat-label">vs mois dernier</div>
-                            </div>
-                            <div class="chart-stat">
-                                <div class="chart-stat-value">27</div>
-                                <div class="chart-stat-label">Modèles notés</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TOP MODELS SECTION -->
-        <section class="section models-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Top Modèles</span>
-                    <h2>Les plus performants</h2>
-                    <p>Sélection des meilleurs modèles selon nos benchmarks</p>
-                </div>
-                <div class="models-grid" id="top-models-grid">
-                    <!-- Generated by JS -->
-                </div>
-                <div class="section-footer">
-                    <a href="models.html" class="btn btn-outline">Voir tous les modèles</a>
-                    <a href="leaderboard.html" class="btn btn-text">Voir le classement complet →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- BENCHMARKS SECTION -->
-        <section class="section benchmarks-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Benchmarks</span>
-                    <h2>Comparaison des scores</h2>
-                    <p>MMLU, GPQA, HumanEval - Les références de l'industrie</p>
-                </div>
-                <div class="benchmark-chart-container">
-                    <canvas id="benchmarkChart"></canvas>
-                </div>
-                <div class="benchmark-stats">
-                    <div class="benchmark-stat">
-                        <div class="benchmark-stat-value">95</div>
-                        <div class="benchmark-stat-label">Score max MMLU</div>
-                    </div>
-                    <div class="benchmark-stat">
-                        <div class="benchmark-stat-value">93.5</div>
-                        <div class="benchmark-stat-label">Score max GPQA</div>
-                    </div>
-                    <div class="benchmark-stat">
-                        <div class="benchmark-stat-value">93</div>
-                        <div class="benchmark-stat-label">Score max HumanEval</div>
-                    </div>
-                    <div class="benchmark-stat">
-                        <div class="benchmark-stat-value">27</div>
-                        <div class="benchmark-stat-label">Modèles testés</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CATEGORIES SECTION -->
-        <section class="section categories-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Catégories</span>
-                    <h2>Explorer par catégorie</h2>
-                </div>
-                <div class="categories-grid">
-                    <a href="models.html?category=Frontier" class="category-card">
-                        <div class="category-icon frontier">🏆</div>
-                        <h3>Frontier</h3>
-                        <p>Les modèles les plus puissants</p>
-                        <span class="category-count">8 modèles</span>
-                    </a>
-                    <a href="models.html?category=High-End" class="category-card">
-                        <div class="category-icon high-end">⚡</div>
-                        <h3>High-End</h3>
-                        <p>Bon rapport performance/coût</p>
-                        <span class="category-count">9 modèles</span>
-                    </a>
-                    <a href="models.html?category=Open" class="category-card">
-                        <div class="category-icon open">📖</div>
-                        <h3>Open Source</h3>
-                        <p>Modèles open weights</p>
-                        <span class="category-count">5 modèles</span>
-                    </a>
-                    <a href="models.html?category=Value" class="category-card">
-                        <div class="category-icon value">💰</div>
-                        <h3>Value</h3>
-                        <p>Meilleur prix du marché</p>
-                        <span class="category-count">3 modèles</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ARTICLES PREVIEW -->
-        <section class="section articles-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Articles</span>
-                    <h2>Dernières analyses</h2>
-                    <p>Études de cas, tutoriels et retours d'expérience</p>
-                </div>
-                <div class="articles-grid" id="articles-grid">
-                    <!-- Generated by JS -->
-                </div>
-                <div class="section-footer">
-                    <a href="articles.html" class="btn btn-outline">Tous les articles</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
-                        Fidox Intelligence
-                    </div>
-                    <p>Votre source d'information sur les benchmarks IA.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Navigation</h4>
-                    <a href="index.html">Accueil</a>
-                    <a href="models.html">Modèles</a>
-                    <a href="leaderboard.html">Leaderboard</a>
-                    <a href="articles.html">Articles</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Ressources</h4>
-                    <a href="#">API</a>
-                    <a href="#">Documentation</a>
-                    <a href="#">GitHub</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Légal</h4>
-                    <a href="#">Mentions légales</a>
-                    <a href="#">Confidentialité</a>
-                    <a href="#">Cookies</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Fidox Intelligence. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="data.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
