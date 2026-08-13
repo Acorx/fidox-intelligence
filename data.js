@@ -173,7 +173,7 @@ function initHeroChart() {
       }]
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: 'x',
       responsive: true,
       plugins: { 
         legend: { display: false },
