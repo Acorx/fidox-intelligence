@@ -1,0 +1,16 @@
+{
+  "project": "fidox-intelligence",
+  "url": "https://fidox-intelligence.pages.dev",
+  "repo": "https://github.com/Acorx/fidox-intelligence",
+  "pages": [
+    {"path": "/", "file": "index.html", "type": "homepage"},
+    {"path": "/models.html", "file": "models.html", "type": "model catalog"},
+    {"path": "/leaderboard.html", "file": "leaderboard.html", "type": "ranking table"},
+    {"path": "/articles.html", "file": "articles.html", "type": "blog listing"},
+    {"path": "/model.html?slug=xxx", "file": "model.html", "type": "model detail"},
+    {"path": "/article.html?slug=xxx", "file": "article.html", "type": "article reader"}
+  ],
+  "models": 27,
+  "top_model": "Claude Fable 5 (95 Elo)",
+  "last_update": "2026-08-13"
+}
