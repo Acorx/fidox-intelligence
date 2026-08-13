@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tous les modèles - Fidox Intelligence</title>
+    <link rel="icon" type="image/png" href="logo-fidox.png">
+    <link rel="stylesheet" href="blog-style.css">
+    <link rel="stylesheet" href="model-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                Fidox Intelligence
+            </a>
+            <nav class="nav">
+                <a href="index.html#models">Modèles</a>
+                <a href="index.html#benchmarks">Benchmarks</a>
+                <a href="index.html#articles">Articles</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    Mode sombre
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="models-list-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Base de données</span>
+                    <h2>Tous les modèles</h2>
+                    <p>Découvrez l'ensemble des modèles IA référencés et comparés</p>
+                </div>
+
+                <!-- Filter tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="Frontier">Frontier</button>
+                    <button class="filter-btn" data-filter="High-End">High-End</button>
+                    <button class="filter-btn" data-filter="Value">Value</button>
+                    <button class="filter-btn" data-filter="Open">Open Source</button>
+                    <button class="filter-btn" data-filter="Emerging">Émergents</button>
+                </div>
+
+                <!-- Models grid -->
+                <div class="models-full-grid" id="models-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                        Fidox Intelligence
+                    </div>
+                    <p>Votre source d'information sur l'IA</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="index.html#models">Modèles</a>
+                    <a href="index.html#benchmarks">Benchmarks</a>
+                    <a href="index.html#articles">Articles</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Réseaux</h4>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Légal</h4>
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Confidentialité</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Fidox Intelligence. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="blog-script.js"></script>
+    <script src="models-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAllModels();
+            setupFilters();
+        });
+
+        function renderAllModels(filter = 'all') {
+            const grid = document.getElementById('models-grid');
+            const models = filter === 'all' 
+                ? getAllModels() 
+                : getModelsByCategory(filter);
+            
+            const sortedModels = models.sort((a, b) => b.globalScore - a.globalScore);
+            
+            grid.innerHTML = sortedModels.map(model => `
+                <div class="model-card" data-category="${model.category}">
+                    <div class="model-header">
+                        <div class="model-logo ${getModelLogoClass(model.developer)}">${model.name[0]}</div>
+                        <div>
+                            <h3>${model.name}</h3>
+                            <span class="model-provider">${model.developer}</span>
+                        </div>
+                        <div class="model-score">${model.globalScore}</div>
+                    </div>
+                    <div class="model-meta">
+                        <span class="meta-item"><strong>${model.params}</strong></span>
+                        <span class="meta-item"><strong>${model.contextWindow}</strong></span>
+                        <span class="meta-item">${model.releaseYear}</span>
+                    </div>
+                    <p class="model-desc">${model.description.substring(0, 100)}...</p>
+                    <div class="model-tags">
+                        ${model.openSource ? '<span class="tag">Open</span>' : ''}
+                        ${model.apiAvailable ? '<span class="tag">API</span>' : ''}
+                        <span class="tag">${model.category}</span>
+                    </div>
+                    <a href="model-detail.html?slug=${model.slug}" class="btn btn-primary btn-block">Voir l'analyse</a>
+                </div>
+            `).join('');
+        }
+
+        function setupFilters() {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    renderAllModels(this.dataset.filter);
+                });
+            });
+        }
+
+        function getModelLogoClass(developer) {
+            const classes = {
+                'OpenAI': 'openai',
+                'Anthropic': 'anthropic',
+                'Google': 'google',
+                'Meta': 'meta',
+                'NVIDIA': 'nvidia',
+                'xAI': 'xai',
+                'DeepSeek': 'deepseek',
+                'Moonshot AI': 'moonshot',
+                'Alibaba': 'alibaba',
+                'Zhipu AI': 'zhipu',
+                'Mistral AI': 'mistral',
+                'LG AI': 'lg'
+            };
+            return classes[developer] || 'generic';
+        }
+    </script>
+</body>
+</html>

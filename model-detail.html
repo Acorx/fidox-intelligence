@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Modèle - Fidox Intelligence</title>
+    <link rel="icon" type="image/png" href="logo-fidox.png">
+    <link rel="stylesheet" href="blog-style.css">
+    <link rel="stylesheet" href="model-page.css">
+    <link rel="stylesheet" href="model-enhanced.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                Fidox Intelligence
+            </a>
+            <nav class="nav">
+                <a href="index.html#models">Modèles</a>
+                <a href="index.html#benchmarks">Benchmarks</a>
+                <a href="index.html#articles">Articles</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    Mode sombre
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Model Hero -->
+        <section class="model-hero">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span>/</span>
+                    <a href="index.html#models">Modèles</a>
+                    <span>/</span>
+                    <span id="breadcrumb-model">Modèle</span>
+                </div>
+                
+                <div class="model-hero-content">
+                    <div class="model-hero-left">
+                        <div class="model-badge" id="model-category">Frontier</div>
+                        <h1 id="model-name">Chargement...</h1>
+                        <p class="model-developer" id="model-developer">Développeur</p>
+                        <p class="model-description" id="model-description">Description du modèle...</p>
+                        
+                        <div class="model-meta-grid">
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">⚙️</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-params">-</div>
+                                    <div class="model-meta-label">Paramètres</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">📝</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-context">-</div>
+                                    <div class="model-meta-label">Contexte</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">📅</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-year">-</div>
+                                    <div class="model-meta-label">Publication</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">💰</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-price">-</div>
+                                    <div class="model-meta-label">Tarif</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="model-tags" id="model-tags">
+                            <span class="tag">API</span>
+                            <span class="tag">Open Source</span>
+                        </div>
+                    </div>
+                    
+                    <div class="model-score-container">
+                        <div class="model-score-circle">
+                            <span class="score-value" id="model-score">0</span>
+                            <span class="score-label">GLOBAL</span>
+                        </div>
+                        <div class="model-score-label">Score Global</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benchmarks Section -->
+        <section class="benchmark-section">
+            <div class="container">
+                <h2>Benchmarks détaillés</h2>
+                <p class="section-desc">Performances du modèle sur les benchmarks de référence</p>
+                
+                <div class="benchmark-cards">
+                    <div class="benchmark-card">
+                        <div class="benchmark-card-header">
+                            <span class="benchmark-card-title">MMLU</span>
+                            <span class="benchmark-card-score" id="score-mmlu">0</span>
+                        </div>
+                        <div class="benchmark-card-context">Maîtrise du langage et connaissances générales</div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-bar-fill" id="bar-mmlu" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="benchmark-card">
+                        <div class="benchmark-card-header">
+                            <span class="benchmark-card-title">GPQA</span>
+                            <span class="benchmark-card-score" id="score-gpqa">0</span>
+                        </div>
+                        <div class="benchmark-card-context">Raisonnement expert scientifique</div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-bar-fill" id="bar-gpqa" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="benchmark-card">
+                        <div class="benchmark-card-header">
+                            <span class="benchmark-card-title">HumanEval</span>
+                            <span class="benchmark-card-score" id="score-humaneval">0</span>
+                        </div>
+                        <div class="benchmark-card-context">Génération et débogage de code</div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-bar-fill" id="bar-humaneval" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="benchmark-chart-container">
+                    <canvas id="benchmark-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+            <div class="container">
+                <h2>Comparaison avec les autres modèles</h2>
+                <p class="section-desc">Positionnement relatif sur l'échelle des performances</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Modèle</th>
+                            <th>MMLU</th>
+                            <th>GPQA</th>
+                            <th>HumanEval</th>
+                            <th>Global</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparison-table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Capabilities Section -->
+        <section class="capabilities-section">
+            <div class="container">
+                <h2>Points forts</h2>
+                <div class="capabilities-grid" id="capabilities-grid">
+                    <!-- Populated by JS -->
+                </div>
+                
+                <div class="capabilities-grid" style="margin-top: 24px;">
+                    <div class="capability-item">
+                        <span class="capability-icon">✓</span>
+                        <div>
+                            <div class="capability-name">API disponible</div>
+                            <div class="capability-desc" id="api-status">Vérifiez la disponibilité</div>
+                        </div>
+                    </div>
+                    <div class="capability-item">
+                        <span class="capability-icon">📖</span>
+                        <div>
+                            <div class="capability-name">Open Source</div>
+                            <div class="capability-desc" id="open-source-status">Non</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best For Section -->
+        <section class="best-for-section">
+            <div class="container">
+                <h2>Meilleur pour</h2>
+                <div class="usage-examples" id="best-for-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Models -->
+        <section class="related-section">
+            <div class="container">
+                <h2>Explorez aussi</h2>
+                <div class="related-models-grid" id="related-models-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                        Fidox Intelligence
+                    </div>
+                    <p>Votre source d'information sur l'IA</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="index.html#models">Modèles</a>
+                    <a href="index.html#benchmarks">Benchmarks</a>
+                    <a href="index.html#articles">Articles</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Réseaux</h4>
+                    <a href="#">Twitter</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Légal</h4>
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Confidentialité</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Fidox Intelligence. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="blog-script.js"></script>
+    <script src="models-data.js"></script>
+    <script src="model-detail.js"></script>
+</body>
+</html>
