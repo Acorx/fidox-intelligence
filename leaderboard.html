@@ -121,6 +121,7 @@
             // Vertical bar chart with click & hover
             const ctx = document.getElementById('eloChart').getContext('2d');
             const top15 = sorted.slice(0, 15);
+            const chartColors = getChartColors();
             
             new Chart(ctx, {
                 type: 'bar',
@@ -148,10 +149,10 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'var(--bg-card)',
-                            titleColor: 'var(--text-primary)',
-                            bodyColor: 'var(--text-secondary)',
-                            borderColor: 'var(--border)',
+                            backgroundColor: chartColors.tooltipBg,
+                            titleColor: chartColors.tooltipText,
+                            bodyColor: chartColors.tooltipText,
+                            borderColor: chartColors.tooltipBorder,
                             borderWidth: 1,
                             padding: 12,
                             displayColors: false,
@@ -169,7 +170,7 @@
                         x: {
                             grid: { display: false },
                             ticks: { 
-                                color: 'var(--text-secondary)', 
+                                color: chartColors.textSecondary, 
                                 font: { size: 10 },
                                 maxRotation: 45,
                                 minRotation: 45
@@ -178,8 +179,8 @@
                         y: {
                             beginAtZero: false,
                             min: 1100,
-                            grid: { color: 'var(--border)' },
-                            ticks: { color: 'var(--text-muted)' }
+                            grid: { color: chartColors.grid },
+                            ticks: { color: chartColors.textMuted }
                         }
                     },
                     onClick: (evt, elements) => {

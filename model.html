@@ -219,6 +219,7 @@
             const top3 = [...MODELS].sort((a, b) => b.globalScore - a.globalScore).slice(0, 3);
             const allModels = [model, ...top3.filter(m => m.slug !== model.slug)];
             const metrics = ['MMLU', 'GPQA', 'HumanEval'];
+            const chartColors = getChartColors();
             
             new Chart(ctx, {
                 type: 'bar',
@@ -234,16 +235,22 @@
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 11 }, color: 'var(--text-secondary)', padding: 20 } },
+                        legend: { position: 'bottom', labels: { font: { size: 11 }, color: chartColors.textSecondary, padding: 20 } },
                         tooltip: {
+                            backgroundColor: chartColors.tooltipBg,
+                            titleColor: chartColors.tooltipText,
+                            bodyColor: chartColors.tooltipText,
+                            borderColor: chartColors.tooltipBorder,
+                            borderWidth: 1,
+                            padding: 12,
                             callbacks: {
                                 label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}%`
                             }
                         }
                     },
                     scales: {
-                        x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text-muted)', font: { weight: '600' } } },
-                        y: { beginAtZero: true, max: 100, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text-muted)', callback: v => v + '%' } }
+                        x: { grid: { color: chartColors.grid }, ticks: { color: chartColors.textMuted, font: { weight: '600' } } },
+                        y: { beginAtZero: true, max: 100, grid: { color: chartColors.grid }, ticks: { color: chartColors.textMuted, callback: v => v + '%' } }
                     }
                 }
             });

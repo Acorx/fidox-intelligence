@@ -1,5 +1,20 @@
 // Fidox Intelligence - Main Data & Logic
 
+// ===== THEME HELPERS =====
+function getChartColors() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  return {
+    textPrimary: isDark ? '#f8fafc' : '#0f172a',
+    textSecondary: isDark ? '#cbd5e1' : '#475569',
+    textMuted: isDark ? '#64748b' : '#94a3b8',
+    border: isDark ? '#1e293b' : '#e2e8f0',
+    grid: isDark ? 'rgba(148,163,184,0.15)' : 'rgba(15,23,42,0.08)',
+    tooltipBg: isDark ? '#1e293b' : '#ffffff',
+    tooltipText: isDark ? '#f8fafc' : '#0f172a',
+    tooltipBorder: isDark ? '#334155' : '#e2e8f0'
+  };
+}
+
 // ===== MODEL DATA =====
 const MODELS = [
   { id: "claude-fable-5", slug: "claude-fable-5", name: "Claude Fable 5", developer: "Anthropic", params: "2T", contextWindow: "1M", releaseYear: 2026, globalScore: 95, mmlu: 93, gpqa: 91, humaneval: 92, lmsysElo: 1506, description: "Le modèle le plus performant du classement LMSYS Arena (1506 Elo). Version sécurisée de Mythos 5, conçue pour le coding autonome longue durée et les tâches agents complexes.", capabilities: ["Coding autonome", "Agents multi-étapes", "Vision", "Mémoire longue"], strengths: ["N°1 LMSYS Arena", "Sessions autonomes 24h+", "Qualité code production"], bestFor: ["Projets coding complexes", "Migrations autonomes", "Recherche agentique"], price: "Inclus Pro/Max", apiAvailable: true, openSource: false, category: "Frontier" },
@@ -143,6 +158,7 @@ function initHeroChart() {
   if (!canvas) return;
   
   const topModels = [...MODELS].sort((a, b) => b.lmsysElo - a.lmsysElo).slice(0, 8);
+  const colors = getChartColors();
   
   new Chart(canvas, {
     type: 'bar',
@@ -159,10 +175,29 @@ function initHeroChart() {
     options: {
       indexAxis: 'y',
       responsive: true,
-      plugins: { legend: { display: false } },
+      plugins: { 
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: colors.tooltipBg,
+          titleColor: colors.tooltipText,
+          bodyColor: colors.tooltipText,
+          borderColor: colors.tooltipBorder,
+          borderWidth: 1,
+          padding: 12,
+          callbacks: {
+            label: ctx => `Elo: ${ctx.parsed.x}`
+          }
+        }
+      },
       scales: {
-        x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text-muted)' } },
-        y: { grid: { display: false }, ticks: { color: 'var(--text-secondary)', font: { size: 12 } } }
+        x: { 
+          grid: { color: colors.grid }, 
+          ticks: { color: colors.textMuted } 
+        },
+        y: { 
+          grid: { display: false }, 
+          ticks: { color: colors.textSecondary, font: { size: 12 } } 
+        }
       }
     }
   });
@@ -173,6 +208,7 @@ function initBenchmarkChart() {
   if (!canvas) return;
   
   const topModels = [...MODELS].sort((a, b) => b.globalScore - a.globalScore).slice(0, 6);
+  const colors = getChartColors();
   
   new Chart(canvas, {
     type: 'radar',
@@ -189,9 +225,25 @@ function initBenchmarkChart() {
     },
     options: {
       responsive: true,
-      plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, color: 'var(--text-secondary)' } } },
+      plugins: { 
+        legend: { position: 'bottom', labels: { font: { size: 11 }, color: colors.textSecondary } },
+        tooltip: {
+          backgroundColor: colors.tooltipBg,
+          titleColor: colors.tooltipText,
+          bodyColor: colors.tooltipText,
+          borderColor: colors.tooltipBorder,
+          borderWidth: 1,
+          padding: 12
+        }
+      },
       scales: {
-        r: { beginAtZero: true, max: 100, grid: { color: 'var(--border)' }, angleLines: { color: 'var(--border)' }, pointLabels: { font: { size: 12 }, color: 'var(--text-secondary)' } }
+        r: { 
+          beginAtZero: true, max: 100, 
+          grid: { color: colors.grid }, 
+          angleLines: { color: colors.grid }, 
+          pointLabels: { font: { size: 12 }, color: colors.textSecondary },
+          ticks: { color: colors.textMuted, backdropColor: 'transparent' }
+        }
       }
     }
   });
