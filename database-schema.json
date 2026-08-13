@@ -1,0 +1,117 @@
+{
+  "tables": {
+    "models": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "slug": "TEXT UNIQUE NOT NULL",
+        "name": "TEXT NOT NULL",
+        "developer": "TEXT NOT NULL",
+        "params": "INTEGER",
+        "context_window": "INTEGER",
+        "release_year": "INTEGER",
+        "global_score": "REAL",
+        "description": "TEXT",
+        "api_available": "BOOLEAN DEFAULT false",
+        "open_source": "BOOLEAN DEFAULT false",
+        "created_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        "updated_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+      },
+      "indexes": ["idx_slug", "idx_global_score"]
+    },
+    "benchmarks": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "model_id": "TEXT REFERENCES models(id)",
+        "benchmark_name": "TEXT NOT NULL",
+        "score": "REAL NOT NULL",
+        "total_possible": "REAL DEFAULT 100",
+        "test_date": "DATE",
+        "methodology": "TEXT"
+      },
+      "indexes": ["idx_model_id", "idx_benchmark_name"]
+    },
+    "articles": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "slug": "TEXT UNIQUE NOT NULL",
+        "title": "TEXT NOT NULL",
+        "subtitle": "TEXT",
+        "category": "TEXT",
+        "author_id": "TEXT",
+        "content": "TEXT",
+        "excerpt": "TEXT",
+        "featured_image": "TEXT",
+        "read_time": "INTEGER",
+        "published_at": "TIMESTAMP",
+        "status": "TEXT DEFAULT 'draft'",
+        "created_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+        "updated_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+      },
+      "indexes": ["idx_slug", "idx_category", "idx_published_at"]
+    },
+    "tags": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "name": "TEXT UNIQUE NOT NULL",
+        "slug": "TEXT UNIQUE NOT NULL"
+      }
+    },
+    "article_tags": {
+      "columns": {
+        "article_id": "TEXT REFERENCES articles(id)",
+        "tag_id": "TEXT REFERENCES tags(id)",
+        "PRIMARY KEY": "(article_id, tag_id)"
+      }
+    },
+    "comments": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "article_id": "TEXT REFERENCES articles(id)",
+        "user_name": "TEXT",
+        "user_email": "TEXT",
+        "content": "TEXT NOT NULL",
+        "parent_id": "TEXT REFERENCES comments(id)",
+        "status": "TEXT DEFAULT 'pending'",
+        "created_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+      },
+      "indexes": ["idx_article_id", "idx_status"]
+    },
+    "users": {
+      "columns": {
+        "id": "TEXT PRIMARY KEY",
+        "name": "TEXT NOT NULL",
+        "email": "TEXT UNIQUE",
+        "bio": "TEXT",
+        "avatar_url": "TEXT",
+        "role": "TEXT DEFAULT 'reader'",
+        "created_at": "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+      }
+    }
+  },
+  "relationships": {
+    "models_to_benchmarks": "one-to-many",
+    "articles_to_tags": "many-to-many",
+    "articles_to_comments": "one-to-many (recursive)",
+    "articles_to_users": "many-to-one"
+  },
+  "api_endpoints": {
+    "GET /api/models": "List all models",
+    "GET /api/models/{slug}": "Get model details",
+    "POST /api/models": "Create model (admin)",
+    "PUT /api/models/{slug}": "Update model (admin)",
+    "DELETE /api/models/{slug}": "Delete model (admin)",
+    
+    "GET /api/benchmarks": "List benchmarks",
+    "GET /api/benchmarks?model_id=X": "Filter by model",
+    
+    "GET /api/articles": "List articles (paginated)",
+    "GET /api/articles/{slug}": "Get article",
+    "POST /api/articles": "Create article (admin)",
+    "PUT /api/articles/{slug}": "Update article (admin)",
+    
+    "GET /api/tags": "List tags",
+    
+    "POST /api/comments": "Submit comment",
+    "GET /api/comments?article_id=X": "Get comments"
+  }
+}
