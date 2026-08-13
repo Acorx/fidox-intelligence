@@ -20,12 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script type="application/ld+json" id="schema-data">
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "Modèle IA",
-        "description": "Fiche détaillée du modèle"
-    }
+    {"@context":"https://schema.org","@type":"Product","name":"Modèle IA","description":"Fiche détaillée du modèle"}
     </script>
 </head>
 <body>
@@ -49,43 +44,55 @@
     </header>
 
     <main>
-        <section class="page-hero page-hero-sm">
+        <!-- MODEL HERO with price -->
+        <section class="model-hero-section">
             <div class="container">
                 <nav aria-label="Fil d'Ariane" class="breadcrumb">
                     <a href="index.html">Accueil</a> <span>›</span>
                     <a href="models.html">Modèles</a> <span>›</span>
                     <span id="breadcrumb-name">Chargement...</span>
                 </nav>
-                <div class="model-hero">
-                    <div class="model-hero-logo" id="m-logo"></div>
-                    <div>
-                        <h1 id="m-name">Chargement...</h1>
-                        <p class="model-hero-sub" id="m-developer"></p>
+                <div class="model-hero-v2">
+                    <div class="model-hero-v2-left">
+                        <div class="model-logo-xl" id="m-logo"></div>
+                        <div>
+                            <h1 id="m-name">Chargement...</h1>
+                            <p class="model-developer-full" id="m-developer"></p>
+                            <div class="model-price-badge" id="m-price-badge"></div>
+                        </div>
                     </div>
-                    <div class="model-hero-score" id="m-score"></div>
+                    <div class="model-hero-v2-right">
+                        <div class="score-display">
+                            <div class="score-circle" id="m-score"></div>
+                            <div class="score-detail">
+                                <div class="score-row"><span>Elo LMSYS</span><strong id="m-elo"></strong></div>
+                                <div class="score-row"><span>Global</span><strong id="m-global"></strong></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Key stats -->
+        <!-- Quick Stats -->
         <section class="section">
             <div class="container">
                 <div class="stats-row" id="m-stats"></div>
             </div>
         </section>
 
-        <!-- Benchmarks chart -->
+        <!-- Performance Bars (replaces radar) -->
         <section class="section section-alt">
             <div class="container">
                 <h2>Profil de performance</h2>
-                <p class="section-desc">Comparaison radar : MMLU · GPQA · HumanEval · LMSYS (normalisé)</p>
+                <p class="section-desc">Comparaison : ce modèle vs top 3 (MMLU · GPQA · HumanEval)</p>
                 <div class="chart-container chart-tall">
-                    <canvas id="radarChart"></canvas>
+                    <canvas id="perfChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- Details -->
+        <!-- Details Grid -->
         <section class="section">
             <div class="container">
                 <div class="model-details-grid">
@@ -105,12 +112,13 @@
                 <div class="model-description">
                     <p id="m-description"></p>
                 </div>
-                <div class="model-meta-row">
-                    <div class="meta-item"><strong>Contexte :</strong> <span id="m-context"></span></div>
-                    <div class="meta-item"><strong>Open source :</strong> <span id="m-opensource"></span></div>
-                    <div class="meta-item"><strong>API :</strong> <span id="m-api"></span></div>
-                    <div class="meta-item"><strong>Prix :</strong> <span id="m-price"></span></div>
+
+                <!-- META INFO PROMINENT -->
+                <div class="meta-card">
+                    <h3>Informations techniques</h3>
+                    <div class="meta-grid" id="m-meta-grid"></div>
                 </div>
+
                 <div style="text-align:center;margin-top:32px">
                     <a href="models.html" class="btn btn-outline">← Retour aux modèles</a>
                 </div>
@@ -129,8 +137,11 @@
     <script src="data.js"></script>
     <script>
         function getQueryParam(name) {
-            const url = new URLSearchParams(window.location.search);
-            return url.get(name);
+            return new URLSearchParams(window.location.search).get(name);
+        }
+        function getDarkColor(base, alpha = 1) {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            return isDark ? `rgba(${base},${alpha})` : `rgba(${base},${alpha})`;
         }
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
@@ -151,53 +162,89 @@
                 "@context": "https://schema.org", "@type": "Product",
                 "name": model.name, "description": model.description,
                 "brand": { "@type": "Brand", "name": model.developer },
-                "aggregateRating": { "@type": "AggregateRating", "ratingValue": model.globalScore, "bestRating": 100, "ratingCount": model.lmsysElo },
+                "aggregateRating": { "@type": "AggregateRating", "ratingValue": model.globalScore, "bestRating": 100 },
                 "url": `https://fidox-intelligence.pages.dev/model.html?slug=${model.slug}`
             });
 
-            // Content
+            // Hero content
             document.getElementById('breadcrumb-name').textContent = model.name;
             document.getElementById('m-name').textContent = model.name;
             document.getElementById('m-developer').textContent = model.developer + (model.releaseYear ? ` · ${model.releaseYear}` : '');
-            document.getElementById('m-logo').className = `model-hero-logo ${getModelLogoClass(model.developer)}`;
+            document.getElementById('m-logo').className = `model-logo-xl ${getModelLogoClass(model.developer)}`;
             document.getElementById('m-logo').textContent = model.name[0];
-            document.getElementById('m-score').innerHTML = `<span class="model-score ${getScoreClass(model.globalScore)}" style="font-size:2rem">${model.globalScore}</span><div style="font-size:0.8rem;color:var(--text-muted)">Score global</div>`;
-            document.getElementById('m-stats').innerHTML = `
-                <div class="stat-card"><div class="stat-value">${model.mmlu}%</div><div class="stat-label">MMLU</div></div>
-                <div class="stat-card"><div class="stat-value">${model.gpqa}%</div><div class="stat-label">GPQA</div></div>
-                <div class="stat-card"><div class="stat-value">${model.humaneval}%</div><div class="stat-label">HumanEval</div></div>
-                <div class="stat-card"><div class="stat-value">${model.lmsysElo}</div><div class="stat-label">LMSYS Elo</div></div>
-                <div class="stat-card"><div class="stat-value">${model.params}</div><div class="stat-label">Paramètres</div></div>
-                <div class="stat-card"><div class="stat-value">${model.contextWindow}</div><div class="stat-label">Contexte</div></div>
-            `;
+            document.getElementById('m-price-badge').innerHTML = `<span class="price-tag">${model.price}</span>${model.openSource ? '<span class="price-tag price-open">Open</span>' : ''}`;
+            document.getElementById('m-elo').textContent = model.lmsysElo;
+            document.getElementById('m-global').textContent = model.globalScore + '/100';
+            document.getElementById('m-score').innerHTML = `<span class="score-num">${model.globalScore}</span><span class="score-lbl">Score</span>`;
+
+            // Stats (hide N/A params)
+            const statsItems = [
+                { label: 'MMLU', value: model.mmlu + '%', show: true },
+                { label: 'GPQA', value: model.gpqa + '%', show: true },
+                { label: 'HumanEval', value: model.humaneval + '%', show: true },
+                { label: 'LMSYS Elo', value: model.lmsysElo, show: true },
+                { label: 'Paramètres', value: model.params, show: model.params !== 'N/A' },
+                { label: 'Contexte', value: model.contextWindow, show: true }
+            ];
+            document.getElementById('m-stats').innerHTML = statsItems
+                .filter(s => s.show)
+                .map(s => `<div class="stat-card"><div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div></div>`)
+                .join('');
+
             document.getElementById('m-strengths').innerHTML = model.strengths.map(s => `<li>${s}</li>`).join('');
             document.getElementById('m-bestfor').innerHTML = model.bestFor.map(b => `<li>${b}</li>`).join('');
             document.getElementById('m-capabilities').innerHTML = model.capabilities.map(c => `<span class="tag">${c}</span>`).join('');
             document.getElementById('m-description').textContent = model.description;
-            document.getElementById('m-context').textContent = model.contextWindow;
-            document.getElementById('m-opensource').innerHTML = model.openSource ? '<span class="tag tag-open">Oui</span>' : '<span class="tag">Non</span>';
-            document.getElementById('m-api').textContent = model.apiAvailable ? 'Disponible' : 'Non disponible';
-            document.getElementById('m-price').textContent = model.price;
 
-            // Radar chart
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            const top5 = [...MODELS].sort((a,b) => b.globalScore - a.globalScore).slice(0,5);
+            // Meta card (prominent)
+            const metaItems = [
+                { label: 'Développeur', value: model.developer },
+                { label: 'Prix API', value: model.price },
+                { label: 'Open source', value: model.openSource ? 'Oui' : 'Non', cls: model.openSource ? 'tag-open' : '' },
+                { label: 'API disponible', value: model.apiAvailable ? 'Oui' : 'Non' },
+                { label: 'Fenêtre contexte', value: model.contextWindow },
+                { label: 'Paramètres', value: model.params !== 'N/A' ? model.params : 'Non publié' },
+                { label: 'Année', value: model.releaseYear },
+                { label: 'Catégorie', value: model.category }
+            ];
+            document.getElementById('m-meta-grid').innerHTML = metaItems.map(m => `
+                <div class="meta-cell">
+                    <span class="meta-cell-label">${m.label}</span>
+                    <span class="meta-cell-value">${m.value}</span>
+                </div>
+            `).join('');
+
+            // Performance comparison bars (replaces radar)
+            const ctx = document.getElementById('perfChart').getContext('2d');
+            const top3 = [...MODELS].sort((a, b) => b.globalScore - a.globalScore).slice(0, 3);
+            const allModels = [model, ...top3.filter(m => m.slug !== model.slug)];
+            const metrics = ['MMLU', 'GPQA', 'HumanEval'];
+            
             new Chart(ctx, {
-                type: 'radar',
+                type: 'bar',
                 data: {
-                    labels: ['MMLU', 'GPQA', 'HumanEval', 'LMSYS*'],
-                    datasets: top5.map((m,i) => ({
-                        label: m.name,
-                        data: [m.mmlu, m.gpqa, m.humaneval, Math.min(m.lmsysElo-1000,100)],
-                        borderColor: i===0?'#3a83f7':`rgba(58,131,247,${0.7-i*0.1})`,
-                        backgroundColor: i===0?'rgba(58,131,247,0.2)':`rgba(58,131,247,${0.08-i*0.01})`,
-                        borderWidth: 2, pointRadius: 3
+                    labels: metrics,
+                    datasets: allModels.map((m, i) => ({
+                        label: i === 0 ? m.name + ' (vous)' : m.name,
+                        data: [m.mmlu, m.gpqa, m.humaneval],
+                        backgroundColor: i === 0 ? '#3a83f7' : 'rgba(148,163,184,0.5)',
+                        borderRadius: 6, borderSkipped: false
                     }))
                 },
                 options: {
                     responsive: true,
-                    plugins: { legend: { position:'bottom', labels:{font:{size:11},color:'var(--text-secondary)'} } },
-                    scales: { r: { beginAtZero:true, max:100, grid:{color:'var(--border)'}, angleLines:{color:'var(--border)'}, pointLabels:{font:{size:12},color:'var(--text-secondary)'} } }
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { size: 11 }, color: 'var(--text-secondary)', padding: 20 } },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { color: 'var(--border)' }, ticks: { color: 'var(--text-muted)', font: { weight: '600' } } },
+                        y: { beginAtZero: true, max: 100, grid: { color: 'var(--border)' }, ticks: { color: 'var(--text-muted)', callback: v => v + '%' } }
+                    }
                 }
             });
         });
