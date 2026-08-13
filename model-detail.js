@@ -1,4 +1,4 @@
-// Model Detail Page - Dynamic loading
+// Model Detail Page - Dynamic loading with real benchmarks
 document.addEventListener('DOMContentLoaded', function() {
     const slug = getQueryParam('slug');
     if (!slug) {
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderCapabilities(model);
     renderBestFor(model);
     renderRelatedModels(model);
+    renderLMSYSRanking(model);
 });
 
 function renderModelPage(model) {
@@ -58,16 +59,27 @@ function renderModelPage(model) {
 function renderBenchmarkChart(model) {
     const ctx = document.getElementById('benchmark-chart').getContext('2d');
     
+    // Prepare data - include LMSYS if available
+    const data = [model.mmlu, model.gpqa, model.humaneval];
+    const labels = ['MMLU', 'GPQA', 'HumanEval'];
+    
+    if (model.lmsysElo) {
+        data.push(Math.min(model.lmsysElo - 1000, 100)); // Normalize to 0-100 scale
+        labels.push('LMSYS*');
+    }
+    
     new Chart(ctx, {
-        type: 'bar',
+        type: 'radar',
         data: {
-            labels: ['MMLU', 'GPQA', 'HumanEval', 'Score Global'],
+            labels: labels,
             datasets: [{
                 label: model.name,
-                data: [model.mmlu, model.gpqa, model.humaneval, model.globalScore],
-                backgroundColor: '#3a83f7',
-                borderRadius: 8,
-                borderSkipped: false
+                data: data,
+                backgroundColor: 'rgba(58, 131, 247, 0.2)',
+                borderColor: '#3a83f7',
+                borderWidth: 2,
+                pointBackgroundColor: '#3a83f7',
+                pointRadius: 4
             }]
         },
         options: {
@@ -81,29 +93,47 @@ function renderBenchmarkChart(model) {
                         font: { family: 'Inter', size: 14, weight: '600' },
                         color: 'var(--text-primary)'
                     }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw}`;
+                        }
+                    }
                 }
             },
             scales: {
-                y: {
+                r: {
                     beginAtZero: true,
                     max: 100,
                     grid: { color: 'var(--border)' },
-                    ticks: { 
-                        font: { family: 'Inter', size: 12 },
-                        color: 'var(--text-muted)',
-                        callback: function(value) { return value + '/100'; }
-                    }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { 
-                        font: { family: 'Inter', size: 13, weight: '500' },
+                    angleLines: { color: 'var(--border)' },
+                    pointLabels: {
+                        font: { family: 'Inter', size: 12, weight: '600' },
                         color: 'var(--text-secondary)'
+                    },
+                    ticks: {
+                        display: false
                     }
                 }
             }
         }
     });
+}
+
+function renderLMSYSRanking(model) {
+    const container = document.getElementById('lmsys-ranking');
+    if (!container || !model.lmsysElo) return;
+    
+    const topModels = getTopModelsByElo(10);
+    const rank = topModels.findIndex(m => m.id === model.id) + 1;
+    
+    container.innerHTML = `
+        <div class="lmsys-badge">
+            <span class="lmsys-rank">#${rank}</span>
+            <span class="lmsys-score">${model.lmsysElo} Elo</span>
+        </div>
+    `;
 }
 
 function renderComparisonTable(currentModel) {
@@ -164,10 +194,10 @@ function renderBestFor(model) {
 
 function renderRelatedModels(currentModel) {
     const container = document.getElementById('related-models-grid');
-    const related = getAllModels()
-        .filter(m => m.id !== currentModel.id)
-        .sort((a, b) => b.globalScore - a.globalScore)
-        .slice(0, 6);
+    const competitors = getCompetitorModels(currentModel);
+    const topModels = getTopModels(6).filter(m => m.id !== currentModel.id);
+    
+    const related = [...competitors, ...topModels].slice(0, 6);
     
     container.innerHTML = related.map(model => `
         <a href="model-detail.html?slug=${model.slug}" class="related-model-card">
@@ -196,7 +226,12 @@ function getModelLogoClass(developer) {
         'Mistral AI': 'mistral',
         'LG AI': 'lg',
         'Upstage': 'upstage',
-        'Conjecture AI': 'conjecture'
+        'Conjecture AI': 'conjecture',
+        'Muse AI': 'muse',
+        'MiniMax': 'minimax',
+        'Motif AI': 'motif',
+        'Inkling AI': 'inkling',
+        'A.X Labs': 'ax'
     };
     return classes[developer] || 'generic';
 }
