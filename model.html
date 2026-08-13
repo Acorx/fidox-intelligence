@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Modèle - Fidox Intelligence</title>
+    <link rel="icon" type="image/png" href="logo-fidox.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
+                Fidox Intelligence
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="models.html" class="nav-link">Modèles</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="articles.html" class="nav-link">Articles</a>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="model-hero-section">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span>/</span>
+                    <a href="models.html">Modèles</a>
+                    <span>/</span>
+                    <span id="breadcrumb-model">-</span>
+                </div>
+                
+                <div class="model-hero-content">
+                    <div class="model-hero-left">
+                        <div class="model-badge" id="model-category">Frontier</div>
+                        <h1 id="model-name">Chargement...</h1>
+                        <p class="model-developer" id="model-developer">-</p>
+                        <p class="model-description" id="model-description">-</p>
+                        
+                        <div class="model-meta-grid">
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">⚙️</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-params">-</div>
+                                    <div class="model-meta-label">Paramètres</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">📝</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-context">-</div>
+                                    <div class="model-meta-label">Contexte</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">📅</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-year">-</div>
+                                    <div class="model-meta-label">Publication</div>
+                                </div>
+                            </div>
+                            <div class="model-meta-item">
+                                <div class="model-meta-icon">💰</div>
+                                <div>
+                                    <div class="model-meta-value" id="model-price">-</div>
+                                    <div class="model-meta-label">Tarif</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="model-tags" id="model-tags">
+                            <span class="tag">API</span>
+                            <span class="tag">Open Source</span>
+                        </div>
+                    </div>
+                    
+                    <div class="model-score-container">
+                        <div class="model-score-circle">
+                            <span class="score-value" id="model-score">0</span>
+                            <span class="score-label">GLOBAL</span>
+                        </div>
+                        <div class="model-score-label">Score Global</div>
+                        <div class="model-elo" id="model-elo">LMSYS: -</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="two-column-layout">
+                    <div class="benchmarks-section">
+                        <h2>Benchmarks détaillés</h2>
+                        <div class="benchmark-cards">
+                            <div class="benchmark-card">
+                                <div class="benchmark-card-header">
+                                    <span class="benchmark-card-title">MMLU</span>
+                                    <span class="benchmark-card-score" id="score-mmlu">0</span>
+                                </div>
+                                <div class="benchmark-card-context">Maîtrise du langage et connaissances générales</div>
+                                <div class="benchmark-bar"><div class="benchmark-bar-fill" id="bar-mmlu" style="width:0%"></div></div>
+                            </div>
+                            <div class="benchmark-card">
+                                <div class="benchmark-card-header">
+                                    <span class="benchmark-card-title">GPQA</span>
+                                    <span class="benchmark-card-score" id="score-gpqa">0</span>
+                                </div>
+                                <div class="benchmark-card-context">Raisonnement expert scientifique</div>
+                                <div class="benchmark-bar"><div class="benchmark-bar-fill" id="bar-gpqa" style="width:0%"></div></div>
+                            </div>
+                            <div class="benchmark-card">
+                                <div class="benchmark-card-header">
+                                    <span class="benchmark-card-title">HumanEval</span>
+                                    <span class="benchmark-card-score" id="score-humaneval">0</span>
+                                </div>
+                                <div class="benchmark-card-context">Génération et débogage de code</div>
+                                <div class="benchmark-bar"><div class="benchmark-bar-fill" id="bar-humaneval" style="width:0%"></div></div>
+                            </div>
+                        </div>
+                        <div class="benchmark-chart-container">
+                            <canvas id="benchmarkChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar">
+                        <div class="sidebar-card">
+                            <h3>Points forts</h3>
+                            <div id="strengths-list"></div>
+                        </div>
+                        <div class="sidebar-card">
+                            <h3>Meilleur pour</h3>
+                            <div id="best-for-list"></div>
+                        </div>
+                        <div class="sidebar-card">
+                            <h3>Informations</h3>
+                            <div class="info-row"><span>API disponible</span><span id="api-status">-</span></div>
+                            <div class="info-row"><span>Open source</span><span id="open-status">-</span></div>
+                            <div class="info-row"><span>Catégorie</span><span id="category-status">-</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 style="margin-top:60px;margin-bottom:24px;">Comparaison</h2>
+                <div class="comparison-table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Modèle</th>
+                                <th>MMLU</th>
+                                <th>GPQA</th>
+                                <th>HumanEval</th>
+                                <th>Global</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
+                        Fidox Intelligence
+                    </div>
+                    <p>Votre source d'information sur les benchmarks IA.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="index.html">Accueil</a>
+                    <a href="models.html">Modèles</a>
+                    <a href="leaderboard.html">Leaderboard</a>
+                    <a href="articles.html">Articles</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Ressources</h4>
+                    <a href="#">API</a>
+                    <a href="#">Documentation</a>
+                    <a href="#">GitHub</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Légal</h4>
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Confidentialité</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Fidox Intelligence. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            const model = MODELS.find(m => m.slug === slug);
+            
+            if (!model) {
+                window.location.href = 'models.html';
+                return;
+            }
+
+            // Update title
+            document.getElementById('page-title').textContent = `${model.name} - Fidox Intelligence`;
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-model').textContent = model.name;
+            
+            // Hero
+            document.getElementById('model-name').textContent = model.name;
+            document.getElementById('model-developer').textContent = model.developer;
+            document.getElementById('model-description').textContent = model.description;
+            document.getElementById('model-category').textContent = model.category;
+            document.getElementById('model-score').textContent = model.globalScore;
+            document.getElementById('model-params').textContent = model.params;
+            document.getElementById('model-context').textContent = model.contextWindow;
+            document.getElementById('model-year').textContent = model.releaseYear;
+            document.getElementById('model-price').textContent = model.price;
+            document.getElementById('model-elo').textContent = `LMSYS: ${model.lmsysElo} Elo`;
+            
+            // Benchmarks
+            document.getElementById('score-mmlu').textContent = model.mmlu;
+            document.getElementById('score-gpqa').textContent = model.gpqa;
+            document.getElementById('score-humaneval').textContent = model.humaneval;
+            document.getElementById('bar-mmlu').style.width = model.mmlu + '%';
+            document.getElementById('bar-gpqa').style.width = model.gpqa + '%';
+            document.getElementById('bar-humaneval').style.width = model.humaneval + '%';
+            
+            // Info
+            document.getElementById('api-status').textContent = model.apiAvailable ? '✓ Oui' : '✗ Non';
+            document.getElementById('open-status').textContent = model.openSource ? '✓ Oui' : '✗ Non';
+            document.getElementById('category-status').textContent = model.category;
+            
+            // Strengths
+            document.getElementById('strengths-list').innerHTML = model.strengths.map(s => 
+                `<div class="strength-item">✓ ${s}</div>`
+            ).join('');
+            
+            // Best for
+            document.getElementById('best-for-list').innerHTML = model.bestFor.map(b => 
+                `<div class="best-for-item">→ ${b}</div>`
+            ).join('');
+            
+            // Chart
+            const ctx = document.getElementById('benchmarkChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['MMLU', 'GPQA', 'HumanEval', 'LMSYS*'],
+                    datasets: [{
+                        label: model.name,
+                        data: [model.mmlu, model.gpqa, model.humaneval, Math.min(model.lmsysElo - 1000, 100)],
+                        backgroundColor: 'rgba(58, 131, 247, 0.2)',
+                        borderColor: '#3a83f7',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#3a83f7'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { r: { beginAtZero: true, max: 100, grid: { color: 'var(--border)' } } }
+                }
+            });
+            
+            // Comparison table
+            const topModels = [...MODELS].sort((a, b) => b.globalScore - a.globalScore).slice(0, 10);
+            document.getElementById('comparison-table-body').innerHTML = topModels.map(m => `
+                <tr ${m.id === model.id ? 'class="highlight"' : ''}>
+                    <td><a href="model.html?slug=${m.slug}" style="color:inherit;font-weight:${m.id === model.id ? '700' : '400'}">${m.name}</a></td>
+                    <td><span class="score-badge ${getScoreClass(m.mmlu)}">${m.mmlu}</span></td>
+                    <td><span class="score-badge ${getScoreClass(m.gpqa)}">${m.gpqa}</span></td>
+                    <td><span class="score-badge ${getScoreClass(m.humaneval)}">${m.humaneval}</span></td>
+                    <td><span class="score-badge ${getScoreClass(m.globalScore)}">${m.globalScore}</span></td>
+                </tr>
+            `).join('');
+        });
+    </script>
+</body>
+</html>

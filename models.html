@@ -5,55 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tous les modèles - Fidox Intelligence</title>
     <link rel="icon" type="image/png" href="logo-fidox.png">
-    <link rel="stylesheet" href="blog-style.css">
-    <link rel="stylesheet" href="model-page.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo">
-                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
                 Fidox Intelligence
             </a>
             <nav class="nav">
-                <a href="index.html#models">Modèles</a>
-                <a href="index.html#benchmarks">Benchmarks</a>
-                <a href="index.html#articles">Articles</a>
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                    Mode sombre
-                </button>
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="models.html" class="nav-link active">Modèles</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="articles.html" class="nav-link">Articles</a>
             </nav>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                </svg>
+                <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
         </div>
     </header>
 
     <main>
-        <section class="models-list-section">
+        <section class="section">
             <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">Base de données</span>
+                <div class="section-header" style="text-align:left;">
+                    <span class="section-tag">Catalogue</span>
                     <h2>Tous les modèles</h2>
-                    <p>Découvrez l'ensemble des modèles IA référencés et comparés</p>
+                    <p>Découvrez l'ensemble des 27 modèles référencés</p>
                 </div>
 
-                <!-- Filter tabs -->
-                <div class="filter-tabs">
-                    <button class="filter-btn active" data-filter="all">Tous</button>
-                    <button class="filter-btn" data-filter="Frontier">Frontier</button>
-                    <button class="filter-btn" data-filter="High-End">High-End</button>
-                    <button class="filter-btn" data-filter="Value">Value</button>
-                    <button class="filter-btn" data-filter="Open">Open Source</button>
-                    <button class="filter-btn" data-filter="Emerging">Émergents</button>
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-btn active" data-filter="all">Tous (27)</button>
+                        <button class="filter-btn" data-filter="Frontier">Frontier (8)</button>
+                        <button class="filter-btn" data-filter="High-End">High-End (9)</button>
+                        <button class="filter-btn" data-filter="Open">Open (5)</button>
+                        <button class="filter-btn" data-filter="Value">Value (3)</button>
+                        <button class="filter-btn" data-filter="Efficiency">Efficiency (3)</button>
+                        <button class="filter-btn" data-filter="Emerging">Émergents (2)</button>
+                    </div>
+                    <div class="filter-sort">
+                        <select id="sort-select" onchange="sortModels(this.value)">
+                            <option value="score">Trier par score</option>
+                            <option value="name">Trier par nom</option>
+                            <option value="mmlu">Trier par MMLU</option>
+                            <option value="gpqa">Trier par GPQA</option>
+                            <option value="humaneval">Trier par HumanEval</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Models grid -->
-                <div class="models-full-grid" id="models-grid">
-                    <!-- Populated by JS -->
+                <div class="models-grid" id="models-grid">
+                    <!-- Generated by JS -->
                 </div>
             </div>
         </section>
@@ -64,21 +75,22 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="logo">
-                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img" width="32" height="32">
+                        <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
                         Fidox Intelligence
                     </div>
-                    <p>Votre source d'information sur l'IA</p>
+                    <p>Votre source d'information sur les benchmarks IA.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Navigation</h4>
-                    <a href="index.html#models">Modèles</a>
-                    <a href="index.html#benchmarks">Benchmarks</a>
-                    <a href="index.html#articles">Articles</a>
+                    <a href="index.html">Accueil</a>
+                    <a href="models.html">Modèles</a>
+                    <a href="leaderboard.html">Leaderboard</a>
+                    <a href="articles.html">Articles</a>
                 </div>
                 <div class="footer-links">
-                    <h4>Réseaux</h4>
-                    <a href="#">Twitter</a>
-                    <a href="#">LinkedIn</a>
+                    <h4>Ressources</h4>
+                    <a href="#">API</a>
+                    <a href="#">Documentation</a>
                     <a href="#">GitHub</a>
                 </div>
                 <div class="footer-links">
@@ -94,76 +106,84 @@
         </div>
     </footer>
 
-    <script src="blog-script.js"></script>
-    <script src="models-data.js"></script>
+    <script src="data.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            renderAllModels();
-            setupFilters();
-        });
+        let currentFilter = 'all';
+        let currentSort = 'score';
 
-        function renderAllModels(filter = 'all') {
-            const grid = document.getElementById('models-grid');
-            const models = filter === 'all' 
-                ? getAllModels() 
-                : getModelsByCategory(filter);
+        function renderModels(filter = 'all', sort = 'score') {
+            const container = document.getElementById('models-grid');
+            if (!container) return;
+
+            let models = [...MODELS];
             
-            const sortedModels = models.sort((a, b) => b.globalScore - a.globalScore);
+            // Filter
+            if (filter !== 'all') {
+                models = models.filter(m => m.category === filter);
+            }
             
-            grid.innerHTML = sortedModels.map(model => `
-                <div class="model-card" data-category="${model.category}">
-                    <div class="model-header">
+            // Sort
+            models.sort((a, b) => {
+                switch(sort) {
+                    case 'name': return a.name.localeCompare(b.name);
+                    case 'mmlu': return b.mmlu - a.mmlu;
+                    case 'gpqa': return b.gpqa - a.gpqa;
+                    case 'humaneval': return b.humaneval - a.humaneval;
+                    default: return b.globalScore - a.globalScore;
+                }
+            });
+
+            container.innerHTML = models.map(model => `
+                <a href="model.html?slug=${model.slug}" class="model-card">
+                    <div class="model-card-header">
                         <div class="model-logo ${getModelLogoClass(model.developer)}">${model.name[0]}</div>
-                        <div>
+                        <div class="model-card-info">
                             <h3>${model.name}</h3>
                             <span class="model-provider">${model.developer}</span>
                         </div>
-                        <div class="model-score">${model.globalScore}</div>
+                        <div class="model-score ${getScoreClass(model.globalScore)}">${model.globalScore}</div>
                     </div>
-                    <div class="model-meta">
-                        <span class="meta-item"><strong>${model.params}</strong></span>
-                        <span class="meta-item"><strong>${model.contextWindow}</strong></span>
-                        <span class="meta-item">${model.releaseYear}</span>
+                    <div class="model-card-meta">
+                        <span>${model.params}</span>
+                        <span>${model.contextWindow}</span>
+                        <span>${model.releaseYear}</span>
                     </div>
-                    <p class="model-desc">${model.description.substring(0, 100)}...</p>
-                    <div class="model-tags">
+                    <p class="model-card-desc">${model.description.substring(0, 100)}...</p>
+                    <div class="model-card-tags">
                         ${model.openSource ? '<span class="tag">Open</span>' : ''}
                         ${model.apiAvailable ? '<span class="tag">API</span>' : ''}
                         <span class="tag">${model.category}</span>
                     </div>
-                    <a href="model-detail.html?slug=${model.slug}" class="btn btn-primary btn-block">Voir l'analyse</a>
-                </div>
+                </a>
             `).join('');
         }
 
-        function setupFilters() {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    buttons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    renderAllModels(this.dataset.filter);
-                });
+        function sortModels(value) {
+            currentSort = value;
+            renderModels(currentFilter, currentSort);
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderModels(currentFilter, currentSort);
+            });
+        });
+
+        // Check URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === category);
             });
         }
 
-        function getModelLogoClass(developer) {
-            const classes = {
-                'OpenAI': 'openai',
-                'Anthropic': 'anthropic',
-                'Google': 'google',
-                'Meta': 'meta',
-                'NVIDIA': 'nvidia',
-                'xAI': 'xai',
-                'DeepSeek': 'deepseek',
-                'Moonshot AI': 'moonshot',
-                'Alibaba': 'alibaba',
-                'Zhipu AI': 'zhipu',
-                'Mistral AI': 'mistral',
-                'LG AI': 'lg'
-            };
-            return classes[developer] || 'generic';
-        }
+        renderModels(currentFilter, currentSort);
     </script>
 </body>
 </html>
