@@ -596,6 +596,166 @@ body {
 .footer-bottom p { font-size: 0.85rem; color: var(--text-muted); }
 
 /* ============================================
+   PAGE HERO (common for inner pages)
+   ============================================ */
+.page-hero {
+  padding: 48px 0 56px;
+  background: linear-gradient(135deg, var(--bg) 0%, var(--primary-bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.page-hero-sm { padding: 32px 0 40px; }
+.page-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+  color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.03em;
+}
+.page-hero p { font-size: 1.1rem; color: var(--text-secondary); }
+
+/* ============================================
+   MODEL HERO (detail page compact)
+   ============================================ */
+.model-hero {
+  display: flex; align-items: center; gap: 32px;
+}
+.model-hero-logo {
+  width: 80px; height: 80px; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; font-weight: 800; color: white; flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.model-hero h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+.model-hero-sub { font-size: 1rem; color: var(--text-muted); }
+.model-hero-score { margin-left: auto; text-align: center; }
+
+/* ============================================
+   STATS ROW (shared across pages)
+   ============================================ */
+.stats-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px;
+}
+.stat-card {
+  text-align: center; padding: 28px 20px;
+  background: var(--bg-card); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); box-shadow: var(--card-shadow);
+}
+.stat-card .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary); letter-spacing: -0.02em; }
+.stat-card .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+/* ============================================
+   CHART CONTAINER
+   ============================================ */
+.chart-container {
+  background: var(--bg-card); border-radius: var(--radius-xl);
+  padding: 32px; border: 1px solid var(--border); box-shadow: var(--card-shadow);
+  max-width: 800px; margin: 0 auto;
+}
+.chart-tall { max-width: 900px; }
+.chart-container canvas { max-height: 400px; width: 100%; }
+.chart-tall canvas { max-height: 500px; }
+
+/* ============================================
+   DATA TABLE (leaderboard)
+   ============================================ */
+.table-wrapper { overflow-x: auto; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--bg-card); box-shadow: var(--card-shadow); }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+.data-table th { background: var(--bg-elevated); font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; position: sticky; top: 0; }
+.data-table td { font-size: 0.9rem; color: var(--text-secondary); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--bg-alt); }
+
+/* ============================================
+   FILTERS (models page)
+   ============================================ */
+.filters {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px; max-width: 360px; padding: 10px 16px;
+  border-radius: var(--radius-md); border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text-primary); font-size: 0.9rem;
+  font-family: inherit; transition: border-color 0.2s;
+}
+.search-input:focus { outline: none; border-color: var(--primary); }
+.search-input::placeholder { color: var(--text-muted); }
+.filter-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.results-count { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
+
+/* ============================================
+   MODEL DETAIL GRID
+   ============================================ */
+.model-details-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px; margin-bottom: 32px;
+}
+.model-detail-section {
+  padding: 28px; background: var(--bg-card); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); box-shadow: var(--card-shadow);
+}
+.model-detail-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+.feature-list { list-style: none; padding: 0; }
+.feature-list li {
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.feature-list li:last-child { border-bottom: none; }
+.tag-cloud { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.model-description {
+  padding: 28px; background: var(--bg-card); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); box-shadow: var(--card-shadow);
+  font-size: 1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 24px;
+}
+.model-meta-row {
+  display: flex; flex-wrap: wrap; gap: 32px; padding: 24px 28px;
+  background: var(--bg-card); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); box-shadow: var(--card-shadow);
+}
+.meta-item { font-size: 0.9rem; color: var(--text-secondary); }
+.meta-item strong { color: var(--text-primary); }
+
+/* ============================================
+   ARTICLE PAGE
+   ============================================ */
+.article-body { max-width: 800px; }
+.article-body p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px; }
+.article-body h2 { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin: 40px 0 20px; letter-spacing: -0.02em; }
+.article-body h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin: 32px 0 16px; }
+.article-body ul { margin-bottom: 24px; padding-left: 24px; }
+.article-body li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+.article-body a { color: var(--primary); text-decoration: none; }
+.article-body a:hover { text-decoration: underline; }
+.article-hero-image {
+  width: 100%; height: 320px; object-fit: cover;
+  border-radius: var(--radius-lg); margin-bottom: 32px;
+}
+.lead { font-size: 1.15rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 32px; padding-left: 20px; border-left: 3px solid var(--primary); }
+.article-footer { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.text-center { text-align: center; }
+.section-desc { color: var(--text-secondary); font-size: 1rem; margin-top: 8px; margin-bottom: 32px; }
+
+/* ============================================
+   HERO PAGE ELEMENTS
+   ============================================ */
+.hero-chart { max-width: 520px; }
+.hero-chart canvas { max-height: 320px; width: 100%; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 20px;
+  background: var(--primary-bg); color: var(--primary);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 20px;
+}
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
@@ -621,4 +781,11 @@ body {
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .section { padding: 60px 0; }
   .articles-grid { grid-template-columns: 1fr; }
+  .model-hero { flex-direction: column; text-align: center; }
+  .model-hero-score { margin-left: 0; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .filters { flex-direction: column; align-items: stretch; }
+  .search-input { max-width: none; }
+  .data-table { font-size: 0.8rem; }
+  .data-table th, .data-table td { padding: 10px 12px; }
 }

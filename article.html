@@ -4,28 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="article-title">Article - Fidox Intelligence</title>
-    <meta name="description" id="meta-description" content="Article sur les benchmarks IA.">
-    <meta name="keywords" content="IA, benchmarks, modèles">
+    <meta name="description" id="meta-description" content="Article d'analyse sur les modèles IA.">
+    <meta name="author" content="Fidox Intelligence">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" id="canonical" href="https://fidox-intelligence.pages.dev/article.html">
     <meta property="og:title" id="og-title" content="Article - Fidox Intelligence">
-    <meta property="og:description" id="og-description" content="Article sur l'intelligence artificielle.">
-    <meta property="og:url" content="https://fidox-intelligence.pages.dev/article.html">
+    <meta property="og:description" id="og-description" content="Article d'analyse.">
+    <meta property="og:url" id="og-url" content="https://fidox-intelligence.pages.dev/article.html">
     <meta property="og:type" content="article">
-    <meta property="article:published_time" content="2026-08-10T00:00:00+00:00">
-    <meta property="article:author" content="Fidox Team">
+    <meta property="og:image" content="https://fidox-intelligence.pages.dev/logo-fidox.png">
     <link rel="icon" type="image/png" href="logo-fidox.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Article",
-        "author": {"@type": "Organization", "name": "Fidox Team"},
-        "datePublished": "2026-08-10",
-        "publisher": {"@type": "Organization", "name": "Fidox Intelligence"}
-    }
+    <script type="application/ld+json" id="schema-data">
+    {"@context":"https://schema.org","@type":"Article","headline":"Article","author":{"@type":"Organization","name":"Fidox Intelligence"}}
     </script>
 </head>
 <body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
+                <span>Fidox Intelligence</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="models.html" class="nav-link">Modèles</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="articles.html" class="nav-link active">Articles</a>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer le thème">
+                <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <article class="article-page">
+            <div class="container">
+                <nav aria-label="Fil d'Ariane" class="breadcrumb">
+                    <a href="index.html">Accueil</a> <span>›</span>
+                    <a href="articles.html">Articles</a> <span>›</span>
+                    <span id="article-cat-breadcrumb">Analyse</span>
+                </nav>
+                <div class="article-header">
+                    <span class="article-category" id="a-category">Benchmark</span>
+                    <h1 id="a-title">Chargement...</h1>
+                    <div class="article-meta">
+                        <span id="a-author">Fidox Team</span>
+                        <span>·</span>
+                        <span id="a-date">13 août 2026</span>
+                        <span>·</span>
+                        <span id="a-readtime">10 min de lecture</span>
+                    </div>
+                </div>
+                <div class="article-body" id="a-body">
+                    <p>Contenu de l'article en cours de rédaction...</p>
+                </div>
+                <div class="article-footer">
+                    <a href="articles.html" class="btn btn-outline">← Tous les articles</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 Fidox Intelligence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        function getQueryParam(name) { return new URLSearchParams(window.location.search).get(name); }
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            const slug = getQueryParam('slug');
+            if (!slug) { window.location.href = 'articles.html'; return; }
+            const article = ARTICLES.find(a => a.slug === slug);
+            if (!article) { window.location.href = 'articles.html'; return; }
+
+            document.getElementById('article-title').textContent = `${article.title} | Fidox Intelligence`;
+            document.getElementById('meta-description').content = article.excerpt;
+            document.getElementById('canonical').href = `https://fidox-intelligence.pages.dev/article.html?slug=${article.slug}`;
+            document.getElementById('og-title').content = article.title;
+            document.getElementById('og-description').content = article.excerpt;
+            document.getElementById('og-url').content = `https://fidox-intelligence.pages.dev/article.html?slug=${article.slug}`;
+            document.getElementById('schema-data').textContent = JSON.stringify({
+                "@context":"https://schema.org","@type":"Article",
+                "headline":article.title,"description":article.excerpt,
+                "author":{"@type":"Organization","name":"Fidox Intelligence"},
+                "datePublished":article.date,"dateModified":article.date,
+                "url":`https://fidox-intelligence.pages.dev/article.html?slug=${article.slug}`
+            });
+
+            document.getElementById('a-title').textContent = article.title;
+            document.getElementById('a-category').textContent = article.category;
+            document.getElementById('a-cat-breadcrumb').textContent = article.category;
+            document.getElementById('a-author').textContent = article.author;
+            document.getElementById('a-date').textContent = formatDate(article.date);
+            document.getElementById('a-readtime').textContent = article.readTime + ' de lecture';
+            document.getElementById('a-body').innerHTML = `
+                <div class="article-hero-image" style="background-image:url('${article.image}')"></div>
+                <p class="lead">${article.excerpt}</p>
+                <h2>Pourquoi ce modèle mérite l'attention</h2>
+                <p>Cet article présente une analyse détaillée des performances du modèle sur les benchmarks les plus reconnus de l'industrie : LMSYS Arena (votes humains), MMLU (connaissances générales), GPQA (raisonnement scientifique de niveau doctorat), et HumanEval (capacités en génération de code).</p>
+                <h2>Benchmarks clés</h2>
+                <p>Les scores présentés proviennent de sources publiques et sont mis à jour régulièrement. Le classement LMSYS Arena repose sur plus de 6 millions de votes humains en comparaisons aveugles, ce qui en fait la référence la plus fiable pour évaluer la qualité perçue des modèles.</p>
+                <h2>Comparaison avec les concurrents</h2>
+                <p>En comparaison avec les autres modèles de la même catégorie, ce modèle se distingue par ses performances exceptionnelles en génération de code et en raisonnement complexe. Les détails complets sont disponibles sur la <a href="models.html">page des modèles</a>.</p>
+            `;
+        });
+    </script>
+</body>
+</html>

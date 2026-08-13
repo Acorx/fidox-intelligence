@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Modèle IA - Fidox Intelligence</title>
     <meta name="description" id="meta-description" content="Fiche détaillée du modèle IA avec benchmarks MMLU, GPQA, HumanEval.">
-    <meta name="keywords" content="modèle IA, benchmark, LLM, comparaison">
+    <meta name="keywords" id="meta-keywords" content="modèle IA, benchmark, LLM, comparaison">
+    <meta name="author" content="Fidox Intelligence">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" id="canonical" href="https://fidox-intelligence.pages.dev/model.html">
     <meta property="og:title" id="og-title" content="Modèle - Fidox Intelligence">
     <meta property="og:description" id="og-description" content="Détails et benchmarks du modèle.">
-    <meta property="og:url" content="https://fidox-intelligence.pages.dev/model.html">
+    <meta property="og:url" id="og-url" content="https://fidox-intelligence.pages.dev/model.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://fidox-intelligence.pages.dev/logo-fidox.png">
     <link rel="icon" type="image/png" href="logo-fidox.png">
@@ -27,3 +29,178 @@
     </script>
 </head>
 <body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="logo-fidox.png" alt="Fidox Intelligence" class="logo-img">
+                <span>Fidox Intelligence</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="models.html" class="nav-link">Modèles</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="articles.html" class="nav-link">Articles</a>
+            </nav>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer le thème">
+                <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero page-hero-sm">
+            <div class="container">
+                <nav aria-label="Fil d'Ariane" class="breadcrumb">
+                    <a href="index.html">Accueil</a> <span>›</span>
+                    <a href="models.html">Modèles</a> <span>›</span>
+                    <span id="breadcrumb-name">Chargement...</span>
+                </nav>
+                <div class="model-hero">
+                    <div class="model-hero-logo" id="m-logo"></div>
+                    <div>
+                        <h1 id="m-name">Chargement...</h1>
+                        <p class="model-hero-sub" id="m-developer"></p>
+                    </div>
+                    <div class="model-hero-score" id="m-score"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key stats -->
+        <section class="section">
+            <div class="container">
+                <div class="stats-row" id="m-stats"></div>
+            </div>
+        </section>
+
+        <!-- Benchmarks chart -->
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Profil de performance</h2>
+                <p class="section-desc">Comparaison radar : MMLU · GPQA · HumanEval · LMSYS (normalisé)</p>
+                <div class="chart-container chart-tall">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details -->
+        <section class="section">
+            <div class="container">
+                <div class="model-details-grid">
+                    <div class="model-detail-section">
+                        <h3>🎯 Points forts</h3>
+                        <ul class="feature-list" id="m-strengths"></ul>
+                    </div>
+                    <div class="model-detail-section">
+                        <h3>💡 Cas d'usage recommandés</h3>
+                        <ul class="feature-list" id="m-bestfor"></ul>
+                    </div>
+                    <div class="model-detail-section">
+                        <h3>⚡ Capacités</h3>
+                        <div class="tag-cloud" id="m-capabilities"></div>
+                    </div>
+                </div>
+                <div class="model-description">
+                    <p id="m-description"></p>
+                </div>
+                <div class="model-meta-row">
+                    <div class="meta-item"><strong>Contexte :</strong> <span id="m-context"></span></div>
+                    <div class="meta-item"><strong>Open source :</strong> <span id="m-opensource"></span></div>
+                    <div class="meta-item"><strong>API :</strong> <span id="m-api"></span></div>
+                    <div class="meta-item"><strong>Prix :</strong> <span id="m-price"></span></div>
+                </div>
+                <div style="text-align:center;margin-top:32px">
+                    <a href="models.html" class="btn btn-outline">← Retour aux modèles</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 Fidox Intelligence. Données LMSYS Arena, Artificial Analysis, BenchLM.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        function getQueryParam(name) {
+            const url = new URLSearchParams(window.location.search);
+            return url.get(name);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            const slug = getQueryParam('slug');
+            if (!slug) { window.location.href = 'models.html'; return; }
+            const model = MODELS.find(m => m.slug === slug);
+            if (!model) { window.location.href = 'models.html'; return; }
+
+            // SEO
+            document.getElementById('page-title').textContent = `${model.name} - Benchmark & Comparaison IA | Fidox Intelligence`;
+            document.getElementById('meta-description').content = `${model.name} par ${model.developer} : score global ${model.globalScore}/100, MMLU ${model.mmlu}%, GPQA ${model.gpqa}%, HumanEval ${model.humaneval}%, Elo LMSYS ${model.lmsysElo}. ${model.description}`;
+            document.getElementById('meta-keywords').content = `${model.name}, ${model.developer}, benchmark IA, LMSYS Arena, MMLU, GPQA, HumanEval, modèle langage`;
+            document.getElementById('canonical').href = `https://fidox-intelligence.pages.dev/model.html?slug=${model.slug}`;
+            document.getElementById('og-title').content = `${model.name} - Benchmark IA | Fidox Intelligence`;
+            document.getElementById('og-description').content = model.description;
+            document.getElementById('og-url').content = `https://fidox-intelligence.pages.dev/model.html?slug=${model.slug}`;
+            document.getElementById('schema-data').textContent = JSON.stringify({
+                "@context": "https://schema.org", "@type": "Product",
+                "name": model.name, "description": model.description,
+                "brand": { "@type": "Brand", "name": model.developer },
+                "aggregateRating": { "@type": "AggregateRating", "ratingValue": model.globalScore, "bestRating": 100, "ratingCount": model.lmsysElo },
+                "url": `https://fidox-intelligence.pages.dev/model.html?slug=${model.slug}`
+            });
+
+            // Content
+            document.getElementById('breadcrumb-name').textContent = model.name;
+            document.getElementById('m-name').textContent = model.name;
+            document.getElementById('m-developer').textContent = model.developer + (model.releaseYear ? ` · ${model.releaseYear}` : '');
+            document.getElementById('m-logo').className = `model-hero-logo ${getModelLogoClass(model.developer)}`;
+            document.getElementById('m-logo').textContent = model.name[0];
+            document.getElementById('m-score').innerHTML = `<span class="model-score ${getScoreClass(model.globalScore)}" style="font-size:2rem">${model.globalScore}</span><div style="font-size:0.8rem;color:var(--text-muted)">Score global</div>`;
+            document.getElementById('m-stats').innerHTML = `
+                <div class="stat-card"><div class="stat-value">${model.mmlu}%</div><div class="stat-label">MMLU</div></div>
+                <div class="stat-card"><div class="stat-value">${model.gpqa}%</div><div class="stat-label">GPQA</div></div>
+                <div class="stat-card"><div class="stat-value">${model.humaneval}%</div><div class="stat-label">HumanEval</div></div>
+                <div class="stat-card"><div class="stat-value">${model.lmsysElo}</div><div class="stat-label">LMSYS Elo</div></div>
+                <div class="stat-card"><div class="stat-value">${model.params}</div><div class="stat-label">Paramètres</div></div>
+                <div class="stat-card"><div class="stat-value">${model.contextWindow}</div><div class="stat-label">Contexte</div></div>
+            `;
+            document.getElementById('m-strengths').innerHTML = model.strengths.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('m-bestfor').innerHTML = model.bestFor.map(b => `<li>${b}</li>`).join('');
+            document.getElementById('m-capabilities').innerHTML = model.capabilities.map(c => `<span class="tag">${c}</span>`).join('');
+            document.getElementById('m-description').textContent = model.description;
+            document.getElementById('m-context').textContent = model.contextWindow;
+            document.getElementById('m-opensource').innerHTML = model.openSource ? '<span class="tag tag-open">Oui</span>' : '<span class="tag">Non</span>';
+            document.getElementById('m-api').textContent = model.apiAvailable ? 'Disponible' : 'Non disponible';
+            document.getElementById('m-price').textContent = model.price;
+
+            // Radar chart
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            const top5 = [...MODELS].sort((a,b) => b.globalScore - a.globalScore).slice(0,5);
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['MMLU', 'GPQA', 'HumanEval', 'LMSYS*'],
+                    datasets: top5.map((m,i) => ({
+                        label: m.name,
+                        data: [m.mmlu, m.gpqa, m.humaneval, Math.min(m.lmsysElo-1000,100)],
+                        borderColor: i===0?'#3a83f7':`rgba(58,131,247,${0.7-i*0.1})`,
+                        backgroundColor: i===0?'rgba(58,131,247,0.2)':`rgba(58,131,247,${0.08-i*0.01})`,
+                        borderWidth: 2, pointRadius: 3
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position:'bottom', labels:{font:{size:11},color:'var(--text-secondary)'} } },
+                    scales: { r: { beginAtZero:true, max:100, grid:{color:'var(--border)'}, angleLines:{color:'var(--border)'}, pointLabels:{font:{size:12},color:'var(--text-secondary)'} } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
